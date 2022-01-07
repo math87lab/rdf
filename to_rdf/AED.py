@@ -49,7 +49,7 @@ def to_rdf(w, df):
         remark = row[21]
 
         # 空白ノード作成
-        subject = "<?s" + str(i+1) + ">"
+        subject = "<?s" + str(i) + ">"
 
         # 書き込み
         w.write(subject + ' a ' + '<http://imi.go.jp/ns/core/2#設置型> .\n')
