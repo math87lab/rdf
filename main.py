@@ -1,7 +1,7 @@
 # インポート
 import pandas as pd
-from to_rdf import AED
-#CareService, Hospital, CulturalProperty, Tourism, Event, PublicWirelessLan, PublicToilet, FireHydrant, EvacuationSpace, Population, PublicFacility, Preshool
+from to_rdf import AED,CareService
+#Hospital,CulturalProperty, Tourism, Event, PublicWirelessLan, PublicToilet, FireHydrant, EvacuationSpace, Population, PublicFacility, Preshool
 
 
 def to_rdf(df, file_name, category):
