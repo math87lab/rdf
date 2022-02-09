@@ -104,34 +104,34 @@ def to_rdf(w, df):
                 w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
             if fax_number:
                 w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#FAX番号> ' + f'"{fax_number}" .\n')
-            if corporate_number or office_number:
-                w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード13 .\n')
-                if corporate_number:
-                    w.write('_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{corporate_number}" .\n')
-                if office_number:
-                    w.write('_:空白ノード13' + ' <http://imi.go.jp/ns/core/rdf#体系> ' + '_:空白ノード14 .\n'
-                            + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#名称> ' + '"事業所番号" .\n'
-                            + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{office_number}".\n')
+            if corporate_number:
+                w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード13 .\n'
+                        + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{corporate_number}" .\n')
+            if office_number:
+                w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/rdf#ID> ' + '_:空白ノード14 .\n'
+                        + '_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{office_number}" .\n'
+                        + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/rdf#体系> ' + '_:空白ノード15 .\n'
+                        + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#名称> ' + '"事業所番号" .\n')
             if corporate_name:
-                w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード15 .\n'
-                        + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
+                w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード16 .\n'
+                        + '_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
         if day:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード16 .\n'
-                    + '_:空白ノード16' + ' <http://www.w3.org/2001/XMLSchema#integer> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
-                    + '_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + '_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
-        if day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード17 .\n'
-                    + '_:空白ノード17' + '　<http://www.w3.org/2001/XMLSchema#integer>  ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
-                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
+                    + '_:空白ノード17' + ' <http://www.w3.org/2001/XMLSchema#integer> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
+                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
+                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
+        if day_detail:
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード18 .\n'
+                    + '_:空白ノード18' + '　<http://www.w3.org/2001/XMLSchema#integer>  ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
+                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
         if capacity:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + '_:空白ノード18 .\n'
-                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}" .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + '_:空白ノード19 .\n'
+                    + '_:空白ノード19' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}" .\n')
 
         if url:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード19 .\n'
-                    + '_:空白ノード19' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード20 .\n'
+                    + '_:空白ノード20' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         if remark:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')
