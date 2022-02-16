@@ -1,7 +1,6 @@
 # インポート
 import pandas as pd
-from to_rdf import AED,CareService,MedicalCare
-#CulturalProperty, Tourism, Event, PublicWirelessLan, PublicToilet, FireHydrant, EvacuationSpace, Population, PublicFacility, Preshool
+from to_rdf import AED,CareService, MedicalEquipment, PublicFacility, ChildcareFacility
 
 
 def to_rdf(df, file_name, category):
@@ -16,7 +15,7 @@ def to_rdf(df, file_name, category):
         CareService.to_rdf(w, df)
     # 医療機器一覧
     elif category == '2':
-        MedicalCare.to_rdf(w, df)
+        MedicalEquipment.to_rdf(w, df)
     # 文化財一覧
     elif category == '3':
         CulturalProperty.to_rdf(w, df)
@@ -46,7 +45,7 @@ def to_rdf(df, file_name, category):
         PublicFacility.to_rdf(w, df)
     # 子育て施設一覧
     elif category == '12':
-        Preshool.to_rdf(w, df)
+        ChildcareFacility.to_rdf(w, df)
         
     w.close()
     
