@@ -77,7 +77,6 @@ def to_rdf(w, df):
                 if city:
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
 
-
         if No:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード6 .\n'
                     + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{No}" .\n')
