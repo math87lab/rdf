@@ -92,19 +92,19 @@ def to_rdf(w, df):
                         w.write('_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
 
         if installation_position:
-            w.write(subject + '_:空白ノード21' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{installation_position}" .\n')
+            w.write(subject + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{installation_position}" .\n')
 
         if start_time or end_time or day_detail:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード31 .\n'
-                    + '_:空白ノード31' + ' <http://www.w3.org/2001/XMLSchema#integer> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード15 .\n'
+                    + '_:空白ノード15' + ' <http://www.w3.org/2001/XMLSchema#integer> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n')
             if start_time:
                 w.write(
-                    '_:空白ノード31' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
+                    '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if end_time:
                 w.write(
-                    '_:空白ノード31' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
+                    '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if day_detail:
-                w.write('_:空白ノード31' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
+                w.write('_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
         if image:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#画像> ' + f'"{image}" .\n')

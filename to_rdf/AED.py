@@ -84,7 +84,7 @@ def to_rdf(w, df):
             node_next_num = node_num + 1
             node_num = node_next_num
 
-        if name or name_kana or address or direction or latitude or longitude or phone_number or extention_number:
+        if name or name_kana or address or direction or latitude or longitude or phone_number or extension_number:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#設置地点> ' + f'{node + str(node_num)} .\n')
             node_next_num = node_num + 1
             if name or name_kana:
@@ -108,12 +108,12 @@ def to_rdf(w, df):
                 if longitude:
                     w.write(f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
                 node_next_num += 1
-            if phone_number or extention_number:
+            if phone_number or extension_number:
                 w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#連絡先> ' + f'{node + str(node_next_num)} .\n')
                 if phone_number:
                     w.write(f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{phone_number}" .\n')
-                if extention_number:
-                    w.write(f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extention_number}" .\n')
+                if extension_number:
+                    w.write(f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
                 node_next_num += 1
                 node_num = node_next_num
 
