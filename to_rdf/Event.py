@@ -38,7 +38,7 @@ def to_rdf(w, df):
         # 連絡先電話番号
         contact_phone = row[16]
         # 連絡先内線番号
-        contact_extention = row[17]
+        contact_extension = row[17]
         # 主催者
         organizer = row[18]
         # 場所名所
@@ -134,14 +134,14 @@ def to_rdf(w, df):
             if price_detail:
                 w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{price_detail}" .\n')
 
-        if contact_name or contact_phone or contact_extention:
+        if contact_name or contact_phone or contact_extension:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#連絡先> ' + '_:空白ノード14 .\n')
             if contact_name:
                 w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{contact_name}" .\n')
             if contact_phone:
                 w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{contact_phone}" .\n')
-            if contact_extention:
-                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{contact_extention}" .\n')
+            if contact_extension:
+                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{contact_extension}" .\n')
 
         if organizer:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#関連組織> ' + '_:空白ノード15 .\n'
