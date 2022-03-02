@@ -1,8 +1,5 @@
 # 指定緊急避難場所一覧
 
-from os import dup
-
-
 def to_rdf(w, df):
     for i in range(len(df)):
         row = df.iloc[i]
