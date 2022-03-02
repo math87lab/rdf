@@ -34,7 +34,7 @@ def to_rdf(w, df):
         # 電話番号
         phone_number = row[11]
         # 内線番号
-        extention_number = row[12]
+        extension_number = row[12]
         # 法人番号
         corporate_number = row[13]
         # 団体名
