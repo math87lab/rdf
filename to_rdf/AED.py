@@ -40,7 +40,7 @@ def to_rdf(w, df):
         # 団体名
         group_name = row[14]
         # 利用可能曜日
-        day = row[15]
+        day_of_week = row[15]
         # 開始時間
         start_time = row[16]
         # 終了時間
@@ -133,11 +133,11 @@ def to_rdf(w, df):
                 node_next_num += 1
             node_num = node_next_num
             
-        if day:
+        if day_of_week:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + f'{node + str(node_num)} .\n'
                     + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
             node_next_num += 1
             node_num = node_next_num
 

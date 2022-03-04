@@ -1,6 +1,13 @@
 # 介護サービス事業所一覧
+import random
+import string
 
 def to_rdf(w, df):
+    # 空白ノードの生成
+    dat = string.digits + string.ascii_lowercase
+    node = '_:node' + ''.join([random.choice(dat) for i in range(9)]) + 'x'
+    node_num = 1
+
     for i in range(len(df)):
         row = df.iloc[i]
         # 都道府県コード又は市区町村コード
@@ -55,86 +62,113 @@ def to_rdf(w, df):
         w.write(subject + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#施設型> .\n')
 
         if id or prefecture or city:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#メタデータ> ' + '_:空白ノード1 .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#メタデータ> ' + f'{node + str(node_num)} .\n')
+            node_next_num = node_num + 1
             if id:
-                w.write('_:空白ノード1' + ' <http://imi.go.jp/ns/core/2#発行者> ' + '_:空白ノード2 .\n'
-                        + '_:空白ノード2' + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード3 .\n'
-                        + '_:空白ノード3' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{id}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#発行者> ' + f'{node + str(node_next_num)} .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#ID> ' + f'{node + str(node_next_num+1)} .\n'
+                        + f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{id}" .\n')
+                node_next_num += 2
 
             if prefecture or city:
-                w.write('_:空白ノード1' + ' <http://imi.go.jp/ns/core/2#発行者> ' + '_:空白ノード4 .\n'
-                        + '_:空白ノード4' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#組織型> .\n'
-                        + '_:空白ノード4' + ' <http://imi.go.jp/ns/core/2#住所> ' + '_:空白ノード5 .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#発行者> ' + f'{node + str(node_next_num)} .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#組織型> .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#住所> ' + f'{node + str(node_next_num+1)} .\n')
                 if prefecture:
-                    w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#都道府県> ' + f'"{prefecture}" .\n')
+                    w.write(f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#都道府県> ' + f'"{prefecture}" .\n')
                 if city:
-                    w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
+                    w.write(f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
+                node_next_num += 2
+                node_num = node_next_num
 
         if no:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード6 .\n'
-                    + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + f'{node + str(node_num)} .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if name or name_kana:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード7 .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#名称> ' + f'{node + str(node_num)} .\n')
             if name:
-                w.write('_:空白ノード7' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{name}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{name}" .\n')
             if name_kana:
-                w.write('_:空白ノード7' + ' <http://imi.go.jp/ns/core/2#カナ表記> ' + f'"{name_kana}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#カナ表記> ' + f'"{name_kana}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
+
         if service:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#種別> ' + f'"{service}" \n')
 
         if address or direction:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#住所> ' + '_:空白ノード8 .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#住所> ' + f'{node + str(node_num)} .\n')
             if address:
-                w.write('_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{address}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{address}" .\n')
             if direction:
-                w.write('_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#方書> ' + f'"{direction}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#方書> ' + f'"{direction}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if latitude or longitude:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#地理座標> ' + '_:空白ノード9 .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#地理座標> ' + f'{node + str(node_num)} .\n')
             if latitude:
-                w.write('_:空白ノード9' + ' <http://imi.go.jp/ns/core/2#緯度> ' + f'"{latitude}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#緯度> ' + f'"{latitude}" .\n')
             if longitude:
-                w.write('_:空白ノード9' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if phone_number or extension_number or fax_number or corporate_number or office_number or corporate_name:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#連絡先> ' + '_:空白ノード10 .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#連絡先> ' + f'{node + str(node_num)} .\n')
+            node_next_num = node_num + 1
             if phone_number:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{phone_number}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{phone_number}" .\n')
             if extension_number:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
             if fax_number:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#FAX番号> ' + f'"{fax_number}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#FAX番号> ' + f'"{fax_number}" .\n')
             if corporate_number:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード11 .\n'
-                        + '_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{corporate_number}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#ID> ' + f'{node + str(node_next_num)} .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{corporate_number}" .\n')
+                node_next_num += 1
             if office_number:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/rdf#ID> ' + '_:空白ノード12 .\n'
-                        + '_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{office_number}" .\n'
-                        + '_:空白ノード12' + ' <http://imi.go.jp/ns/core/rdf#体系> ' + '_:空白ノード13 .\n'
-                        + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#名称> ' + '"事業所番号" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/rdf#ID> ' + f'{node + str(node_next_num)} .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{office_number}" .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/rdf#体系> ' + f'{node + str(node_next_num+1)} .\n'
+                        + f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#名称> ' + '"事業所番号" .\n')
+                node_next_num += 2
             if corporate_name:
-                w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード14 .\n'
-                        + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
+                w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#名称> ' + f'{node + str(node_next_num)} .\n'
+                        + f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
+                node_next_num += 1
+            node_num = node_next_num
         
-        if day_of_week:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード15 .\n'
-                    + '_:空白ノード15' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
-                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
+
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + f'{node + str(node_num)} .\n'
+                    + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
+
         
         if day_detail:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード16 .\n'
-                    + '_:空白ノード16' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
-                    + '_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + f'{node + str(node_num)} .\n'
+                    + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if capacity:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + '_:空白ノード17 .\n'
-                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}"^^<http://www.w3.org/2001/XMLSchema#anyURI>  .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + f'{node + str(node_num)} .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if url:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード18 .\n'
-                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + f'{node + str(node_num)} .\n'
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
+            node_next_num = node_num + 1
+            node_num = node_next_num
 
         if remark:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')
