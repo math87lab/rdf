@@ -6,7 +6,7 @@ def to_rdf(w, df):
         # 都道府県コード又は市区町村コード
         id = row[0]
         # NO
-        No = row[1]
+        no = row[1]
         # 都道府県名
         prefecture = row[2]
         # 市区町村名
@@ -48,9 +48,9 @@ def to_rdf(w, df):
                 if city:
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
 
-        if No:
+        if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード8 .\n'
-                    + '_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{No}" .\n')
+                    + '_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
         if category:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#種別> ' + f'"{category} \n')
 

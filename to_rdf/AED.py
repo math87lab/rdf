@@ -48,7 +48,7 @@ def to_rdf(w, df):
         # 利用可能日時特記事項
         day_detail = row[18]
         # 小児対応設備の有無
-        children = row[19]
+        #explanation = row[19]
         # URL
         url = row[20]
         # 備考

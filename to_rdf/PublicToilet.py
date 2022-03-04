@@ -7,7 +7,7 @@ def to_rdf(w, df):
         # 都道府県コード又は市区町村コード
         id = row[0]
         # NO
-        No = row[1]
+        no = row[1]
         # 都道府県名
         prefecture = row[2]
         # 市区町村名
@@ -23,7 +23,7 @@ def to_rdf(w, df):
         # 方書
         direction = row[8]
         # 設置位置
-        installation_position = row[9]
+        area = row[9]
         # 緯度
         latitude = row[10]
         # 経度
@@ -37,7 +37,7 @@ def to_rdf(w, df):
         # 画像
         image = row[15]
         # 画像_ライセンス
-        image_licence = row[16]
+        #image_licence = row[16]
         # 備考
         remark = row[17]
 
@@ -61,9 +61,9 @@ def to_rdf(w, df):
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#都道府県> ' + f'"{prefecture}" .\n')
                 if city:
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
-        if No:
+        if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード8 .\n'
-                    + '_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{No}" .\n')
+                    + '_:空白ノード8' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
 
         if name or name_kana or name_eng or address or direction or latitude or longitude:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#関連施設> ' + '_:空白ノード9 .\n'
@@ -91,8 +91,8 @@ def to_rdf(w, df):
                     if longitude:
                         w.write('_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
 
-        if installation_position:
-            w.write(subject + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{installation_position}" .\n')
+        if area:
+            w.write(subject + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{area}" .\n')
 
         if start_time or end_time or day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード15 .\n'
@@ -107,9 +107,9 @@ def to_rdf(w, df):
                 w.write('_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
         if image:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#画像> ' + f'"{image}" .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#画像> ' + f'"{image}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         if remark:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}""^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         w.write('\n')

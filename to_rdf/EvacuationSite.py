@@ -22,7 +22,7 @@ def to_rdf(w, df):
         # 電話番号
         phone_number = row[8]
         # 内線番号
-        extention_number = row[9]
+        extension_number = row[9]
         # 市区町村コード
         id = row[10]
         # 都道府県名
@@ -50,7 +50,7 @@ def to_rdf(w, df):
         # 想定収容人数
         capacity = row[22]
         # 対象となる町会・自治会
-        council = row[23]
+        area = row[23]
         # URL
         url = row[24]
         # 備考
@@ -88,14 +88,14 @@ def to_rdf(w, df):
                 w.write('_:空白ノード4' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
             if elevation:
                 w.write('_:空白ノード4' + ' <http://imi.go.jp/ns/core/2#測地高度> ' + '_:空白ノード5 .\n'
-                        + '_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{elevation}" .\n')
+                        + '_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{elevation}"^^<http://www.w3.org/2001/XMLSchema#decimal> .\n')
 
-        if phone_number or extention_number:
+        if phone_number or extension_number:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#連絡先> ' + '_:空白ノード6 .\n')
             if phone_number:
                 w.write('_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{phone_number}" .\n')
-            if extention_number:
-                w.write('_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extention_number}" .\n')
+            if extension_number:
+                w.write('_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
 
         if id or prefecture or city:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#関与> ' + '_:空白ノード7 .\n'
@@ -112,13 +112,13 @@ def to_rdf(w, df):
                 if city:
                     w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
 
-        if council:
+        if area:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#関与> ' + '_:空白ノード11 .\n'
                     + '_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#役割> ' + '"対象となる町会・自治会" .\n'
                     + '_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#関与者> ' + '_:空白ノード12 .\n'
                     + '_:空白ノード12' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#組織型> .\n'
                     + '_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード13 .\n'
-                    + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{council}" .\n')
+                    + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{area}" .\n')
 
         if kinds1:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#種別コード[災害種別_洪水]> ' + '_:空白ノード14 .\n'
@@ -163,7 +163,7 @@ def to_rdf(w, df):
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード24 .\n'
-                    + '_:空白ノード24' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}" .\n')
+                    + '_:空白ノード24' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         if remark:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')

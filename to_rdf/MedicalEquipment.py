@@ -6,7 +6,7 @@ def to_rdf(w, df):
         # 都道府県コード又は市区町村コード
         id = row[0]
         # NO
-        No = row[1]
+        no = row[1]
         # 都道府県名
         prefecture = row[2]
         # 市区町村名
@@ -16,7 +16,7 @@ def to_rdf(w, df):
         # 名称_カナ
         name_kana = row[5]
         # 医療機関の種類
-        variety = row[6]
+        category = row[6]
         # 住所
         address = row[7]
         # 方書
@@ -38,7 +38,7 @@ def to_rdf(w, df):
         # 医療機関コード
         code = row[16]
         # 診療曜日
-        day = row[17]
+        day_of_week = row[17]
         # 診療開始時間
         start_time = row[18]
         # 診療終了時間
@@ -50,7 +50,7 @@ def to_rdf(w, df):
         # 診療科目
         med_subject = row[22]
         # 病床数
-        bed_num = row[23]
+        capacity = row[23]
         # URL
         url = row[24]
         # 備考
@@ -77,9 +77,9 @@ def to_rdf(w, df):
                 if city:
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
 
-        if No:
+        if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード6 .\n'
-                    + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{No}" .\n')
+                    + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
 
         if name or name_kana:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード7 .\n')
@@ -87,8 +87,8 @@ def to_rdf(w, df):
                 w.write('_:空白ノード7' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{name}" .\n')
             if name_kana:
                 w.write('_:空白ノード7' + ' <http://imi.go.jp/ns/core/2#カナ表記> ' + f'"{name_kana}" .\n')
-        if variety:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#種別> ' + f'"{variety}" \n')
+        if category:
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#種別> ' + f'"{category}" \n')
 
         if address or direction:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#住所> ' + '_:空白ノード8 .\n')
@@ -122,19 +122,19 @@ def to_rdf(w, df):
                 if code:
                     w.write('_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{code}".\n')
 
-        if day:
+        if day_of_week:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード13 .\n'
                     + '_:空白ノード13' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
+                    + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
 
         if start_time or end_time or day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード14 .\n'
                     + '_:空白ノード14' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n')
             if start_time:
-                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{day_detail}" .\n')
+                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{day_detail}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if end_time:
-                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{day_detail}" .\n')
+                w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{day_detail}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if day_detail:
                 w.write('_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
@@ -147,9 +147,9 @@ def to_rdf(w, df):
         if med_subject:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#業務種目> ' + f'"{med_subject}" .\n')
 
-        if bed_num:
+        if capacity:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + '_:空白ノード15 .\n'
-                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{bed_num}" .\n')
+                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}""^^<http://www.w3.org/2001/XMLSchema#decimal>  .\n')
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード16 .\n'

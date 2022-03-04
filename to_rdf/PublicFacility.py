@@ -6,7 +6,7 @@ def to_rdf(w, df):
         # 都道府県コード又は市区町村コード
         id = row[0]
         # NO
-        No = row[1]
+        no = row[1]
         # 都道府県名
         prefecture = row[2]
         # 市区町村名
@@ -30,13 +30,13 @@ def to_rdf(w, df):
         # 電話番号
         phone_number = row[12]
         # 内線番号
-        extention_number = row[13]
+        extension_number = row[13]
         # 法人番号
         corporate_number = row[14]
         # 団体名
-        group_name = row[15]
+        corporate_name = row[15]
         # 利用可能曜日
-        day = row[16]
+        day_of_week = row[16]
         # 開始時間
         start_time = row[17]
         # 終了時間
@@ -44,7 +44,7 @@ def to_rdf(w, df):
         # 利用可能日時特記事項
         day_detail = row[19]
         # 説明
-        description = row[20]
+        explanation = row[20]
         # バリアフリー情報
         barrier_free = row[21]
         # URL
@@ -73,9 +73,9 @@ def to_rdf(w, df):
                 if city:
                     w.write('_:空白ノード5' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
 
-        if No:
+        if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード6 .\n'
-                    + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{No}" .\n')
+                    + '_:空白ノード6' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{no}" .\n')
 
         if name or name_kana:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード7 .\n')
@@ -105,38 +105,38 @@ def to_rdf(w, df):
             if longitude:
                 w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#経度> ' + f'"{longitude}" .\n')
 
-        if phone_number or extention_number or corporate_number or group_name:
+        if phone_number or extension_number or corporate_number or corporate_name:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#連絡先> ' + '_:空白ノード11 .\n')
             if phone_number:
                 w.write('_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#電話番号> ' + f'"{phone_number}" .\n')
-            if extention_number:
-                w.write('_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extention_number}" .\n')
+            if extension_number:
+                w.write('_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
             if corporate_number:
                 w.write('_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#ID> ' + '_:空白ノード12 .\n'
                         + '_:空白ノード12' + ' <http://imi.go.jp/ns/core/2#識別値> ' + f'"{corporate_number}" .\n')
-            if group_name:
+            if corporate_name:
                 w.write('_:空白ノード11' + ' <http://imi.go.jp/ns/core/2#組織> ' + '_:空白ノード13 .\n'
                         + '_:空白ノード13' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード14 .\n'
-                        + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{group_name}" .\n')
+                        + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
 
-        if day:
+        if day_of_week:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード15 .\n'
                     + '_:空白ノード15' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
+                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
 
         if start_time or end_time or day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード16 .\n'
                     + '_:空白ノード16' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n')
             if start_time:
-                w.write('_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}" .\n')
+                w.write('_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if end_time:
-                w.write('_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}" .\n')
+                w.write('_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if day_detail:
                 w.write('_:空白ノード16' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
-        if description:
-            w.write(subject + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{description}" .\n')
+        if explanation:
+            w.write(subject + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{explanation}" .\n')
 
         if barrier_free:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#記述> ' + '_:空白ノード17 .\n'
@@ -145,7 +145,7 @@ def to_rdf(w, df):
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード18 .\n'
-                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}" .\n')
+                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         if remark:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')

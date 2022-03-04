@@ -38,7 +38,7 @@ def to_rdf(w, df):
         # 事業所番号
         office_number = row[16]
         # 利用可能曜日
-        day = row[17]
+        day_of_week = row[17]
         # 利用可能日時特記事項
         day_detail = row[18]
         # 定員
@@ -117,11 +117,11 @@ def to_rdf(w, df):
                 w.write('_:空白ノード10' + ' <http://imi.go.jp/ns/core/2#名称> ' + '_:空白ノード14 .\n'
                         + '_:空白ノード14' + ' <http://imi.go.jp/ns/core/2#表記> ' + f'"{corporate_name}" .\n')
         
-        if day:
+        if day_of_week:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード15 .\n'
                     + '_:空白ノード15' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
-                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day}" .\n')
+                    + '_:空白ノード15' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
         
         if day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード16 .\n'
@@ -130,7 +130,7 @@ def to_rdf(w, df):
 
         if capacity:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + '_:空白ノード17 .\n'
-                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}" .\n')
+                    + '_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}"^^<http://www.w3.org/2001/XMLSchema#anyURI>  .\n')
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード18 .\n'

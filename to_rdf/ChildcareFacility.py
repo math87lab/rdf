@@ -147,15 +147,15 @@ def to_rdf(w, df):
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + '_:空白ノード17 .\n'
                     + '_:空白ノード17' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n')
             if start_time:
-                w.write('_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}" .\n')
+                w.write('_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#開始時間> ' + f'"{start_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if end_time:
-                w.write('_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}" .\n')
+                w.write('_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if day_detail:
                 w.write('_:空白ノード17' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + '_:空白ノード18 .\n'
-                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}" .\n')
+                    + '_:空白ノード18' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
 
         if remark:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#備考> ' + f'"{remark}" .\n')
