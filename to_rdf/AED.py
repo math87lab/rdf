@@ -76,7 +76,7 @@ def to_rdf(w, df):
                 if city:
                     w.write(f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
                 node_next_num += 2
-                node_num = node_next_num
+            node_num = node_next_num
 
         if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + f'{node + str(node_num)} .\n'
@@ -115,7 +115,7 @@ def to_rdf(w, df):
                 if extension_number:
                     w.write(f'{node + str(node_next_num)}' + ' <http://imi.go.jp/ns/core/2#内線番号> ' + f'"{extension_number}" .\n')
                 node_next_num += 1
-                node_num = node_next_num
+            node_num = node_next_num
 
         if position:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#設置位置> ' + f'"{position}" .\n')
@@ -138,7 +138,7 @@ def to_rdf(w, df):
                     + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
                     + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#開催期日> ' + f'"{day_of_week}" .\n')
-            node_next_num += 1
+            node_next_num = node_num + 1
             node_num = node_next_num
 
         if start_time or end_time or day_detail:
@@ -150,13 +150,13 @@ def to_rdf(w, df):
                 w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#終了時間> ' + f'"{end_time}"^^<http://www.w3.org/2001/XMLSchema#time> .\n')
             if day_detail:
                 w.write(f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#説明> ' + f'"{day_detail}" .\n')
-            node_next_num += 1
+            node_next_num = node_num + 1
             node_num = node_next_num
 
         if url:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#参照> ' + f'{node + str(node_num)} .\n'
                     + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#参照先> ' + f'"{url}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
-            node_next_num += 1
+            node_next_num = node_num + 1
             node_num = node_next_num
 
         if remark:

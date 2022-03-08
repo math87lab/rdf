@@ -79,7 +79,7 @@ def to_rdf(w, df):
                 if city:
                     w.write(f'{node + str(node_next_num+1)}' + ' <http://imi.go.jp/ns/core/2#市区町村> ' + f'"{city}" .\n')
                 node_next_num += 2
-                node_num = node_next_num
+            node_num = node_next_num
 
         if no:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#ID> ' + f'{node + str(node_num)} .\n'
@@ -142,7 +142,7 @@ def to_rdf(w, df):
                 node_next_num += 1
             node_num = node_next_num
         
-
+        if day_of_week:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + f'{node + str(node_num)} .\n'
                     + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
                     + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#種別> ' + '"週間" .\n'
@@ -150,7 +150,6 @@ def to_rdf(w, df):
             node_next_num = node_num + 1
             node_num = node_next_num
 
-        
         if day_detail:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#利用可能時間> ' + f'{node + str(node_num)} .\n'
                     + f'{node + str(node_num)}' + ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' + '<http://imi.go.jp/ns/core/2#定期スケジュール型> .\n'
@@ -160,7 +159,7 @@ def to_rdf(w, df):
 
         if capacity:
             w.write(subject + ' <http://imi.go.jp/ns/core/2#収容人数> ' + f'{node + str(node_num)} .\n'
-                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}"^^<http://www.w3.org/2001/XMLSchema#anyURI> .\n')
+                    + f'{node + str(node_num)}' + ' <http://imi.go.jp/ns/core/2#数値> ' + f'"{capacity}"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .\n')
             node_next_num = node_num + 1
             node_num = node_next_num
 
